@@ -1,21 +1,7 @@
 ﻿@model Contactform
 @{
-    ViewData["Title"] = "Contactpagina";
-    
-    var isFormSubmitted = ViewBag.IsSubmitted ?? false;
-    
+    ViewData["Title"] = "Contactpagina";  
 }
-
-<script>
-    // If form was successfully submitted, reset the form fields
-    @if (isFormSubmitted)
-    {
-        <text>
-                document.querySelector('form').reset();
-        </text>
-    }
-</script>
-
 
 <div class="page">
     <section class="contact">

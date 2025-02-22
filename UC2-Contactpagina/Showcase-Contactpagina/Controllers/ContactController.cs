@@ -64,7 +64,8 @@ namespace Showcase_Contactpagina.Controllers
             
             // Clear the user's data
             form = null;
-            
+
+            ModelState.Clear();
             return View();
         }
     }

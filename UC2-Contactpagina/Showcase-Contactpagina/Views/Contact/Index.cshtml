@@ -1,15 +1,39 @@
 ﻿@model Contactform
 @{
     ViewData["Title"] = "Contactpagina";
+    
+    var isFormSubmitted = ViewBag.IsSubmitted ?? false;
+    
 }
+
+<script>
+    // If form was successfully submitted, reset the form fields
+    @if (isFormSubmitted)
+    {
+        <text>
+                document.querySelector('form').reset();
+        </text>
+    }
+</script>
+
 
 <div class="page">
     <section class="contact">
 
-        <h1>Contact</h1>
+        <h1>Contacteer Elnathan Pauwels</h1>
         <p>@ViewBag.Message</p>
         <form method="post" class="form-contactpagina">
 
+            <div class="form-contactpagina__inputelement fx-col">
+                <lavel for="subject">Onderwerp:</lavel>
+                <input type="text" asp-for="Subject" name="subject" id="subject" required />
+            </div>
+
+            <div class="form-contactpagina__inputelement fx-col">
+                <lavel for="message">Bericht:</lavel>
+                <textarea asp-for="Message" name="message" id="message" rows="5" required></textarea>
+            </div>
+            
             <div class="form-contactpagina__inputelement fx-col">
                 <label for="firstname">Voornaam: </label>
                 <input type="text" asp-for="FirstName" name="firstname" id="firstname" required>
@@ -22,13 +46,19 @@
 
             <div class="form-contactpagina__inputelement fx-col">
                 <label for="email">E-mailadres: </label>
-                <input type="email" asp-for="Email" name="email" id="email">
+                <input type="email" asp-for="Email" name="email" id="email" placeholder="test@gmail.com">
             </div>
 
             <div class="form-contactpagina__inputelement fx-col">
                 <label for="phone">Telefoonnummer: </label>
-                <input type="tel" asp-for="Phone" name="phone" id="phone">
+                <input type="tel" asp-for="Phone" name="phone" id="phone" required>
             </div>
+
+            <div class="form-contactpagina__inputelement fx-col">
+                <input type="reset" />
+            </div>
+
+            <div class="g-recaptcha" data-sitekey="6LeuBtYqAAAAAP5xrDQwzAYppt5brUX9J2k2QjeZ"></div>
 
             <div class="form-contactpagina__inputelement">
                 <input type="submit" value="Verstuur!">

@@ -59,7 +59,9 @@
 }
 
 .profile-content__period {
-    display: none;
+    font-size: 12px;
+    color: #5c6166;
+    display: flex;
 }
 
 .profile-content__institute {
@@ -95,12 +97,6 @@
     .profile-content__element-header {
         display: flex;
         justify-content: space-between;
-    }
-
-    .profile-content__period {
-        font-size: 12px;
-        color: #5c6166;
-        display: flex;
     }
 }
 

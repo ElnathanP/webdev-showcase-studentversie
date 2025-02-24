@@ -25,12 +25,41 @@ namespace Showcase_Contactpagina.Controllers
             return View();
         }
 
+        public async Task<bool> VerifyCaptcha(string captchaResponse)
+        {
+            string secretKey = "6LeuBtYqAAAAAFd63Jc2ojDJKM8LRk0NVV2o-Kr7";
+
+            using (HttpClient client = new HttpClient())
+            {
+                var values = new Dictionary<string, string>
+        {
+            { "secret", secretKey },
+            { "response", captchaResponse }
+        };
+
+                var content = new FormUrlEncodedContent(values);
+                var response = await client.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
+                var responseString = await response.Content.ReadAsStringAsync();
+
+                // Parse the JSON response from Google reCAPTCHA
+                var jsonResponse = Newtonsoft.Json.Linq.JObject.Parse(responseString);
+                bool success = jsonResponse["success"].ToObject<bool>();
+
+                return success;
+            }
+        }
+
         // POST: ContactController
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Index(Contactform form)
         {
-            if(!ModelState.IsValid)
+            var captchaToken = Request.Form["g-recaptcha-response"];
+            Console.WriteLine(captchaToken);
+
+            bool captchaValid = await VerifyCaptcha(captchaToken);
+            
+            if(!ModelState.IsValid || !captchaValid)
             {
                 ViewBag.Message = "De ingevulde velden voldoen niet aan de gestelde voorwaarden";
                 return View();
